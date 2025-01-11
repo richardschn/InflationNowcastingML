@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2820
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid1\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid2\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid101\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid102\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid201\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{hyphen\}}{\leveltext\leveltemplateid202\'01\uc0\u8259 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww25220\viewh22000\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs38 \cf0 Harnessing Machine Learning for Real-Time Inflation Nowcasting\
+Authors: Richard Schnorrenberger, Aishameriane Schmidt, Guilherme Valle Moura\
+Last update: December 2024\
+\
+This repository contains the R codes for implementation of the unrestricted mixed-frequency ML models and nowcasting results reported in the paper.\
+\
+######################################################################################################################\
+Step 1. Implementing the nowcasting models: Main.R\
+######################################################################################################################\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	\uc0\u8259 	}The \'93Main.R\'94 file defines the specification of the general prediction model and sequentially runs the selected ML methods. \
+\pard\tx940\tx1440\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li1440\fi-1440\pardirnatural\partightenfactor0
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}The model specification comprises a series of dummies that can be used to automatically switch on/off a specific feature of the general prediction model. For instance, 'focusFlag' adds survey expectations as a predictor variable while 'seasFlag' adds monthly seasonal dummies. Note that not all dummies are active for both classes of ML methods \'97 for example, 'CVtreeFlag' will activate cross validation only for tree-based methods.\
+{\listtext	\uc0\u8259 	}The selected ML methods specified in the variable \'91models\'92 will be sequentially estimated using the auxiliary R-functions stored in the directory '/Models'.\
+{\listtext	\uc0\u8259 	}The position of the model one wishes to estimate can be modified using 'runModel'. In case you wish to add other ML methods or benchmark models, please make sure that the model name is compatible across \'93Main.R\'94 and '/Models'.\
+{\listtext	\uc0\u8259 	}The \'93Loading.R\'94 file loads the real-time dataset, transforms the data and prepares the mixed-frequency framework for the nowcasting exercise.\
+{\listtext	\uc0\u8259 	}For each model, if the dummy 'saveFlag' is active, the results will be saved in the directory 'Results/modelName', where modelName must be exactly equal to the corresponding string defined in the variable 'models' in \'93Main.R\'94.\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls1\ilvl0\cf0 {\listtext	\uc0\u8259 	}The results are saved as xlsx files within the corresponding directory 'Results/modelName' and consist of the following separate files:\
+\pard\tx940\tx1440\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li1440\fi-1440\pardirnatural\partightenfactor0
+\ls1\ilvl1\cf0 {\listtext	\uc0\u8259 	}Model predictions for each nowcast horizon (day within the reporting month) throughout the evaluation period, observed inflation values, and the benchmark SPF expectations.\
+{\listtext	\uc0\u8259 	}RMSE and MAE performance metrics for each nowcast horizon.\
+{\listtext	\uc0\u8259 	}For shrinkage-based methods: cross-validation parameters and the estimated coefficients at each nowcasting round.\
+{\listtext	\uc0\u8259 	}For each of the above files, the model specification dummies are also saved in a separate sheet. \
+\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+######################################################################################################################\
+Step 2. Reproducing tables and figures\
+######################################################################################################################\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	\uc0\u8259 	}RMSE results: Table 3 and Table B1.\
+\pard\tx940\tx1440\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li1440\fi-1440\pardirnatural\partightenfactor0
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}After running the nowcasting models in Step 1, save the xlsx file of nowcast errors for each model in the directory '/Plots/data/results' using the label 'results_ModelName.xlsx'.\
+{\listtext	\uc0\u8259 	}Execute the file \'93RMSE_tables.R\'94 from the directory 'Support code'. The script creates a new file in '/Plots/data/results' with the absolute RMSE and two other tables that include the relative RMSE compared to the median SPF and the Top5 SPF. It automatically performs a unilateral DM test and includes information on statistical significance (star codes) to the tables.\
+\
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls2\ilvl0\cf0 {\listtext	\uc0\u8259 	}Loss differentials, variable relevance and robustness checks: Figure 3, Figure B1, Figure 4, Figure 5, Figure B3, Figure B4.\
+\pard\tx940\tx1440\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li1440\fi-1440\pardirnatural\partightenfactor0
+\ls2\ilvl1\cf0 {\listtext	\uc0\u8259 	}These figures are automatically generated by the Matlab script '/Plots/Main_Plots', which executes the m-files in '/Plots/functions'. Remarks: (i) these m-files require the current xlsx files (or new results in similar format) in '/Plots/data', (ii) the figures are automatically saved in '/Plots/figures'.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx220\tx720\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li720\fi-720\pardirnatural\partightenfactor0
+\ls3\ilvl0\cf0 {\listtext	\uc0\u8259 	}Fluctuation test: Figure B2.\
+\pard\tx940\tx1440\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\li1440\fi-1440\pardirnatural\partightenfactor0
+\ls3\ilvl1\cf0 {\listtext	\uc0\u8259 	}Execute the file \'93fluctuation_testing.R\'94 from the directory 'Support code'.\
+{\listtext	\uc0\u8259 	}The figures are automatically saved in '/Plots/figures'.\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 \
+}
